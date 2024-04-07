@@ -1,18 +1,5 @@
-class Todo {
-    constructor(title, description) {
-        this.title = title
-        this.description = description
-    }
-}
+import './style.css'
+import {displayProjects} from './dom-util.js'
+import {projects} from './project.js'
 
-const todos = {}
-let todoId = 0
-
-function createTodo(title, description) {
-    todos[todoId] = new Todo(title, description)
-    ++todoId
-}
-
-function removeTodo(id) {
-    delete todos[id]
-}
+displayProjects(projects)
