@@ -13,6 +13,6 @@ function createTodo(title, description) {
     ++todoId
 }
 
-createTodo('test', 'testing')
-
-console.log(todos)
+function removeTodo(id) {
+    delete todos[id]
+}
