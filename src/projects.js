@@ -49,8 +49,6 @@ const createActionsEl = (id, detailsEl) => {
     el.append(editBtn)
 
     saveBtn.addEventListener('click', () => {
-        console.log(nameInputEl.value)
-        console.log(nameInputEl.placeholder)
         projects[id] = {
             ...projects[id],
             name: nameInputEl.value || nameInputEl.placeholder,

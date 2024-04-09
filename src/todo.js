@@ -9,21 +9,68 @@ const createDetailsEl = ({title, description}) => {
     titleEl.innerText = title
     el.append(titleEl)
 
+    const titleInputEl = document.createElement('input')
+    titleInputEl.classList.add('todo__title-input')
+    titleInputEl.classList.add('hide')
+    titleInputEl.placeholder = title
+    el.append(titleInputEl)
+
     const descriptionEl = document.createElement('p')
     descriptionEl.classList.add('todo__description')
     descriptionEl.innerText = description
     el.append(descriptionEl)
 
+    const descriptionInputEl = document.createElement('input')
+    descriptionInputEl.classList.add('todo__description-input')
+    descriptionInputEl.classList.add('hide')
+    descriptionInputEl.placeholder = description
+    el.append(descriptionInputEl)
+
     return el
 }
 
-const createActionsEl = (projects, projectId, todos, todoId) => {
+const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
     const el = document.createElement('div')
     el.classList.add('todo__actions')
+
+    const titleEl = detailsEl.querySelector('.todo__title')
+    const titleInputEl = detailsEl.querySelector('.todo__title-input')
+    const descriptionEl = detailsEl.querySelector('.todo__description')
+    const descriptionInputEl = detailsEl.querySelector('.todo__description-input')
+
+    const saveBtn = document.createElement('button')
+    saveBtn.innerText = 'Save'
+    saveBtn.classList.add('hide')
+    el.append(saveBtn)
 
     const editBtn = document.createElement('button')
     editBtn.innerText = 'Edit'
     el.append(editBtn)
+
+    saveBtn.addEventListener('click', () => {
+        todos[todoId] = {
+            ...todos[todoId],
+            title: titleInputEl.value || titleInputEl.placeholder,
+            description: descriptionInputEl.value || descriptionInputEl.placeholder,
+        }
+
+        projects[projectId] = {
+            ...projects[projectId],
+            todos,
+        }
+
+        displayAllProjects(projects)
+    })
+
+    editBtn.addEventListener('click', () => {
+        editBtn.classList.add('hide')
+        titleEl.classList.add('hide')
+        descriptionEl.classList.add('hide')
+
+        saveBtn.classList.remove('hide')
+        titleInputEl.classList.remove('hide')
+        descriptionInputEl.classList.remove('hide')
+    })
 
     const deleteBtn = document.createElement('button')
     deleteBtn.innerText = 'Delete'
@@ -46,8 +93,9 @@ const createTodoEl = (projects, projectId, todos, details, todoId) => {
     const el = document.createElement('div')
     el.classList.add('todo')
 
-    el.append(createDetailsEl(details))
-    el.append(createActionsEl(projects, projectId, todos, todoId))
+    const detailsEl = createDetailsEl(details)
+    el.append(detailsEl)
+    el.append(createActionsEl(projects, projectId, todos, todoId, detailsEl))
 
     return el
 }
