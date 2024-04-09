@@ -54,7 +54,7 @@ const createTodosEl = ({todos}) => {
     const todosEl = document.createElement('div')
     todosEl.classList.add('todos__list')
 
-    Object.values(todos).forEach(todo => {
+    todos.forEach(todo => {
         todosEl.append(createTodoEl(todo))
     })
 
@@ -83,7 +83,7 @@ export const displayAllProjects = projects => {
     const root = document.querySelector('#projects')
     root.innerText = ''
 
-    Object.values(projects).reverse().forEach(p => {
+    projects.forEach(p => {
         root.append(createProjectEl(p))
     })
 }
