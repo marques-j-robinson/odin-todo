@@ -1,8 +1,8 @@
 import './style.css'
-import {displayProjects} from './dom-util.js'
+import {displayAllProjects} from './projects.js'
 import projects from './db.json'
 
-displayProjects(projects)
+displayAllProjects(projects)
 
 document.querySelector('#createNewProject').addEventListener('click', () => {
     projects.push({
@@ -10,5 +10,5 @@ document.querySelector('#createNewProject').addEventListener('click', () => {
         'description': 'About new project...',
         'todos': [],
     })
-    displayProjects(projects)
+    displayAllProjects(projects)
 })
