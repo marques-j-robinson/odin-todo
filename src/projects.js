@@ -1,4 +1,5 @@
 import {createTodoEl} from './todo.js'
+import projects from './db.json'
 
 const createDetailsEl = ({name, description}) => {
     const el = document.createElement('div')
@@ -17,7 +18,7 @@ const createDetailsEl = ({name, description}) => {
     return el
 }
 
-const createActionsEl = () => {
+const createActionsEl = id => {
     const el = document.createElement('div')
     el.classList.add('project__actions')
 
@@ -27,6 +28,10 @@ const createActionsEl = () => {
 
     const deleteBtn = document.createElement('button')
     deleteBtn.innerText = 'Delete'
+    deleteBtn.addEventListener('click', () => {
+        projects.splice(id, 1)
+        displayAllProjects(projects)
+    })
     el.append(deleteBtn)
 
     return el
@@ -64,12 +69,12 @@ const createTodosEl = ({todos}) => {
 }
 
 
-const createProjectEl = projectDetails => {
+const createProjectEl = (projectDetails, projectId) => {
     const el = document.createElement('div')
     el.classList.add('project')
 
     const detailsEl = createDetailsEl(projectDetails)
-    const actionsEl = createActionsEl()
+    const actionsEl = createActionsEl(projectId)
     const headerEl = createHeaderEl(detailsEl, actionsEl)
     el.append(headerEl)
 
@@ -83,7 +88,7 @@ export const displayAllProjects = projects => {
     const root = document.querySelector('#projects')
     root.innerText = ''
 
-    projects.forEach(p => {
-        root.append(createProjectEl(p))
+    projects.forEach((p, id) => {
+        root.append(createProjectEl(p, id))
     })
 }
