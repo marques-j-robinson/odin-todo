@@ -150,6 +150,8 @@ export const createAllTodos = (projects, projectId, {todos}) => {
         todos.push({
             title: 'New Task',
             description: 'About new task...',
+            dueDate: null,
+            priority: 0,
         })
 
         todosEl.innerText = ''
