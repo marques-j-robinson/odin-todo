@@ -5,11 +5,13 @@
         "todos": [
             {
                 "title": "first task",
-                "description": "some info"
+                "description": "some info",
+                "dueDate": null
             },
             {
                 "title": "second task",
-                "description": "more info"
+                "description": "more info",
+                "dueDate": null
             }
         ]
     },

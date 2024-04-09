@@ -1,6 +1,6 @@
 import {displayAllProjects} from './projects.js'
 
-const createDetailsEl = ({title, description}) => {
+const createDetailsEl = ({title, description, dueDate}) => {
     const el = document.createElement('div')
     el.classList.add('todo__details')
 
@@ -26,6 +26,18 @@ const createDetailsEl = ({title, description}) => {
     descriptionInputEl.placeholder = description
     el.append(descriptionInputEl)
 
+    const dueDateEl = document.createElement('p')
+    dueDateEl.classList.add('todo__duedate')
+    dueDateEl.innerText = dueDate
+    el.append(dueDateEl)
+
+    const dueDateInputEl = document.createElement('input')
+    dueDateInputEl.classList.add('todo__duedate-input')
+    dueDateInputEl.classList.add('hide')
+    dueDateInputEl.type = 'date'
+    dueDateInputEl.value = dueDate
+    el.append(dueDateInputEl)
+
     return el
 }
 
@@ -37,6 +49,8 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
     const titleInputEl = detailsEl.querySelector('.todo__title-input')
     const descriptionEl = detailsEl.querySelector('.todo__description')
     const descriptionInputEl = detailsEl.querySelector('.todo__description-input')
+    const dueDateEl = detailsEl.querySelector('.todo__duedate')
+    const dueDateInputEl = detailsEl.querySelector('.todo__duedate-input')
 
     const saveBtn = document.createElement('button')
     saveBtn.innerText = 'Save'
@@ -48,10 +62,12 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
     el.append(editBtn)
 
     saveBtn.addEventListener('click', () => {
+        console.log(dueDateInputEl.value)
         todos[todoId] = {
             ...todos[todoId],
             title: titleInputEl.value || titleInputEl.placeholder,
             description: descriptionInputEl.value || descriptionInputEl.placeholder,
+            dueDate: dueDateInputEl.value || null,
         }
 
         projects[projectId] = {
@@ -66,10 +82,12 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
         editBtn.classList.add('hide')
         titleEl.classList.add('hide')
         descriptionEl.classList.add('hide')
+        dueDateEl.classList.add('hide')
 
         saveBtn.classList.remove('hide')
         titleInputEl.classList.remove('hide')
         descriptionInputEl.classList.remove('hide')
+        dueDateInputEl.classList.remove('hide')
     })
 
     const deleteBtn = document.createElement('button')
