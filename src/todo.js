@@ -1,6 +1,6 @@
 import {displayAllProjects} from './projects.js'
 
-const createDetailsEl = ({title, description, dueDate}) => {
+const createDetailsEl = ({title, description, dueDate, priority}) => {
     const el = document.createElement('div')
     el.classList.add('todo__details')
 
@@ -38,6 +38,20 @@ const createDetailsEl = ({title, description, dueDate}) => {
     dueDateInputEl.value = dueDate
     el.append(dueDateInputEl)
 
+    const priorityEl = document.createElement('p')
+    priorityEl.classList.add('todo__priority')
+    priorityEl.innerText = priority ? priority===1 ? 'medium': 'high' : 'low'
+    el.append(priorityEl)
+
+    const priorityInputEl = document.createElement('input')
+    priorityInputEl.classList.add('todo__priority-input')
+    priorityInputEl.classList.add('hide')
+    priorityInputEl.type = 'range'
+    priorityInputEl.min = 0
+    priorityInputEl.max = 2
+    priorityInputEl.value = priority
+    el.append(priorityInputEl)
+
     return el
 }
 
@@ -51,6 +65,8 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
     const descriptionInputEl = detailsEl.querySelector('.todo__description-input')
     const dueDateEl = detailsEl.querySelector('.todo__duedate')
     const dueDateInputEl = detailsEl.querySelector('.todo__duedate-input')
+    const priorityEl = detailsEl.querySelector('.todo__priority')
+    const priorityInputEl = detailsEl.querySelector('.todo__priority-input')
 
     const saveBtn = document.createElement('button')
     saveBtn.innerText = 'Save'
@@ -62,12 +78,12 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
     el.append(editBtn)
 
     saveBtn.addEventListener('click', () => {
-        console.log(dueDateInputEl.value)
         todos[todoId] = {
             ...todos[todoId],
             title: titleInputEl.value || titleInputEl.placeholder,
             description: descriptionInputEl.value || descriptionInputEl.placeholder,
             dueDate: dueDateInputEl.value || null,
+            priority: Number(priorityInputEl.value) || 0,
         }
 
         projects[projectId] = {
@@ -83,11 +99,13 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
         titleEl.classList.add('hide')
         descriptionEl.classList.add('hide')
         dueDateEl.classList.add('hide')
+        priorityEl.classList.add('hide')
 
         saveBtn.classList.remove('hide')
         titleInputEl.classList.remove('hide')
         descriptionInputEl.classList.remove('hide')
         dueDateInputEl.classList.remove('hide')
+        priorityInputEl.classList.remove('hide')
     })
 
     const deleteBtn = document.createElement('button')
