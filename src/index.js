@@ -1,16 +1,14 @@
 import './style.css'
 import {displayProjects} from './dom-util.js'
-import {projects} from './project.js'
+import projects from './db.json'
 
 displayProjects(projects)
 
 document.querySelector('#createNewProject').addEventListener('click', () => {
-    const projectId = Object.values(projects).length
-    const project = {
+    projects.push({
         'name': 'New Project',
         'description': 'About new project...',
-        'todos': {},
-    }
-    projects[projectId] = project
+        'todos': [],
+    })
     displayProjects(projects)
 })
