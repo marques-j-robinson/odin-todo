@@ -87,8 +87,9 @@ const createProject = ({name, description, todos}) => {
 
 export const displayProjects = projects => {
     const root = document.querySelector('#projects')
+    root.innerText = ''
 
-    Object.values(projects).forEach(p => {
+    Object.values(projects).reverse().forEach(p => {
         root.append(createProject(p))
     })
 }
