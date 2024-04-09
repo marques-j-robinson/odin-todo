@@ -20,6 +20,10 @@ header {
     margin-bottom: 40px;
 }
 
+.hide {
+    display: none;
+}
+
 #projects {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -40,6 +44,10 @@ header {
     align-items: center;
     padding: 20px 0;
     width: 100%;
+}
+
+.project__details {
+    width: 50%;
 }
 
 .project__name {
