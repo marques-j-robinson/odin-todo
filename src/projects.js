@@ -94,14 +94,25 @@ const createTodosEl = ({todos}) => {
     const el = document.createElement('div')
     el.classList.add('project__todos')
 
+    const todosEl = document.createElement('div')
+    todosEl.classList.add('todos__list')
+
     const newTaskBtn = document.createElement('button')
     newTaskBtn.classList.add('btn__new-task')
     newTaskBtn.innerText = 'Create New Task'
+    newTaskBtn.addEventListener('click', () => {
+        todos.push({
+            title: 'New Task',
+            description: 'About new task...',
+        })
+
+        todosEl.innerText = ''
+
+        todos.forEach(todo => {
+            todosEl.append(createTodoEl(todo))
+        })
+    })
     el.append(newTaskBtn)
-
-
-    const todosEl = document.createElement('div')
-    todosEl.classList.add('todos__list')
 
     todos.forEach(todo => {
         todosEl.append(createTodoEl(todo))
