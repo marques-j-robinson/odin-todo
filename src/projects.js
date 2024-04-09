@@ -1,4 +1,4 @@
-import {createTodoEl} from './todo.js'
+import {createAllTodos} from './todo.js'
 import projects from './db.json'
 
 const createDetailsEl = ({name, description}) => {
@@ -90,39 +90,6 @@ const createHeaderEl = (detailsEl, actionsEl) => {
     return el
 }
 
-const createTodosEl = ({todos}) => {
-    const el = document.createElement('div')
-    el.classList.add('project__todos')
-
-    const todosEl = document.createElement('div')
-    todosEl.classList.add('todos__list')
-
-    const newTaskBtn = document.createElement('button')
-    newTaskBtn.classList.add('btn__new-task')
-    newTaskBtn.innerText = 'Create New Task'
-    newTaskBtn.addEventListener('click', () => {
-        todos.push({
-            title: 'New Task',
-            description: 'About new task...',
-        })
-
-        todosEl.innerText = ''
-
-        todos.forEach(todo => {
-            todosEl.append(createTodoEl(todo))
-        })
-    })
-    el.append(newTaskBtn)
-
-    todos.forEach(todo => {
-        todosEl.append(createTodoEl(todo))
-    })
-
-    el.append(todosEl)
-
-    return el
-}
-
 
 const createProjectEl = (projectDetails, projectId) => {
     const el = document.createElement('div')
@@ -133,7 +100,7 @@ const createProjectEl = (projectDetails, projectId) => {
     const headerEl = createHeaderEl(detailsEl, actionsEl)
     el.append(headerEl)
 
-    const todosEl = createTodosEl(projectDetails)
+    const todosEl = createAllTodos(projects, projectId, projectDetails)
     el.append(todosEl)
 
     return el
