@@ -65,6 +65,7 @@ const createProject = ({name, description, todos}) => {
     todosEl.classList.add('project__todos')
 
     const newTaskBtn = document.createElement('button')
+    newTaskBtn.classList.add('btn__new-task')
     newTaskBtn.innerText = 'Create New Task'
 
     todosEl.append(newTaskBtn)
