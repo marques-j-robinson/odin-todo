@@ -1,5 +1,10 @@
 import {createAllTodos} from './todo.js'
-import projects from './db.json'
+import {
+    getProjects,
+    createProject,
+    editProject,
+    deleteProject,
+} from './db.js'
 
 const createDetailsEl = ({name, description}) => {
     const el = document.createElement('div')
@@ -49,13 +54,13 @@ const createActionsEl = (id, detailsEl) => {
     el.append(editBtn)
 
     saveBtn.addEventListener('click', () => {
-        projects[id] = {
-            ...projects[id],
+        const project = {
             name: nameInputEl.value || nameInputEl.placeholder,
             description: descriptionInputEl.value || descriptionInputEl.placeholder,
         }
 
-        displayAllProjects(projects)
+        editProject(id, project)
+        displayProjects()
     })
 
     editBtn.addEventListener('click', () => {
@@ -71,8 +76,8 @@ const createActionsEl = (id, detailsEl) => {
     const deleteBtn = document.createElement('button')
     deleteBtn.innerText = 'Delete'
     deleteBtn.addEventListener('click', () => {
-        projects.splice(id, 1)
-        displayAllProjects(projects)
+        deleteProject(id)
+        displayProjects()
     })
     el.append(deleteBtn)
 
@@ -104,11 +109,22 @@ const createProjectEl = (projectDetails, projectId) => {
     return el
 }
 
-export const displayAllProjects = projects => {
+export const displayProjects = () => {
     const root = document.querySelector('#projects')
     root.innerText = ''
 
-    projects.forEach((p, id) => {
-        root.append(createProjectEl(p, id))
+    const projects = getProjects()
+
+    for (let id = projects.length-1; id>=0; --id) {
+        root.append(createProjectEl(projects[id], id))
+    }
+}
+
+export const displayCreateNewProjectBtn = () => {
+    const btn = document.querySelector('#createNewProject')
+
+    btn.addEventListener('click', () => {
+        createProject()
+        displayProjects()
     })
 }

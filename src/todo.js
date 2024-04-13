@@ -1,4 +1,7 @@
-import {displayAllProjects} from './projects.js'
+import {displayProjects} from './projects.js'
+import {
+    editProject,
+} from './db.js'
 
 const createDetailsEl = ({title, description, dueDate, priority}) => {
     const el = document.createElement('div')
@@ -86,12 +89,8 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
             priority: Number(priorityInputEl.value) || 0,
         }
 
-        projects[projectId] = {
-            ...projects[projectId],
-            todos,
-        }
-
-        displayAllProjects(projects)
+        editProject(projectId, {todos})
+        displayProjects()
     })
 
     editBtn.addEventListener('click', () => {
@@ -113,12 +112,8 @@ const createActionsEl = (projects, projectId, todos, todoId, detailsEl) => {
     deleteBtn.addEventListener('click', () => {
         todos.splice(todoId, 1)
 
-        projects[projectId] = {
-            ...projects[projectId],
-            todos,
-        }
-
-        displayAllProjects(projects)
+        editProject(projectId, {todos})
+        displayProjects()
     })
     el.append(deleteBtn)
 
@@ -153,6 +148,8 @@ export const createAllTodos = (projects, projectId, {todos}) => {
             dueDate: null,
             priority: 0,
         })
+
+        editProject(projectId, {todos})
 
         todosEl.innerText = ''
 
